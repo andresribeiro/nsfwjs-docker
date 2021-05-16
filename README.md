@@ -1,6 +1,6 @@
 # nsfwjs-docker
 
-A Docker REST API for NSFW detection with [NSFWJS](https://github.com/infinitered/nsfwjs). You can find it on the Docker Hub [here](https://hub.docker.com/repository/docker/andresribeiroo/nsfwjs)
+A Docker REST API for NSFW detection with [NSFWJS](https://github.com/infinitered/nsfwjs). You can find it on the Docker Hub [here](https://hub.docker.com/r/andresribeiroo/nsfwjs)
 
 ## Installation
 
