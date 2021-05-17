@@ -41,7 +41,7 @@ docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs
 }
 ```
 
-### Multiple images, multipart/form-data
+#### Multiple images, multipart/form-data
 
 `POST` request to `/multiple/multipart-form` sending images in the `contents` field
 
