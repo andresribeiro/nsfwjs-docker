@@ -10,9 +10,38 @@ docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs
 
 ## Usage
 
-Make a `POST` request to `localhost:3333` sending the image in the `content` field, like this:
+#### One image, multipart/form-data
 
-<img alt="Insomnia screenshot" src="assets/insomnia.png" />
+`POST` request to `/single/multipart-form` sending an image in the `content` field
+
+```
+{
+  "prediction": [
+    {
+      "className": "Neutral",
+      "probability": 0.6371303796768188
+    },
+    {
+      "className": "Drawing",
+      "probability": 0.3603636920452118
+    },
+    {
+      "className": "Hentai",
+      "probability": 0.0024505197070538998
+    },
+    {
+      "className": "Sexy",
+      "probability": 0.00003775714503717609
+    },
+    {
+      "className": "Porn",
+      "probability": 0.000017730137187754735
+    }
+  ]
+}
+```
+
+###
 
 ## PS
 

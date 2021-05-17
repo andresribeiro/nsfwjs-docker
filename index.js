@@ -13,15 +13,19 @@ async function main() {
   const model = await nsfw.load("file://model/", { type: "graph" });
   tf.enableProdMode();
 
-  app.post("/", upload.single("content"), async (request, response) => {
-    const content = request.file;
+  app.post(
+    "/single/multipart-form",
+    upload.single("content"),
+    async (request, response) => {
+      const content = request.file;
 
-    const tfContent = await tf.node.decodeImage(content.buffer, 3);
-    const predictions = await model.classify(tfContent);
-    tfContent.dispose();
+      const tfContent = await tf.node.decodeImage(content.buffer, 3);
+      const prediction = await model.classify(tfContent);
+      tfContent.dispose();
 
-    return response.json(predictions);
-  });
+      return response.json({ prediction });
+    }
+  );
 
   app.listen(3333);
 }
