@@ -27,6 +27,25 @@ async function main() {
     }
   );
 
+  app.post(
+    "/multiple/multipart-form",
+    upload.array("contents"),
+    async (request, response) => {
+      const contents = request.files;
+
+      const predictions = await Promise.all(
+        contents.map(async (content) => {
+          const tfContent = await tf.node.decodeImage(content.buffer, 3);
+          const prediction = await model.classify(tfContent);
+          tfContent.dispose();
+          return prediction;
+        })
+      );
+
+      return response.json({ predictions });
+    }
+  );
+
   app.listen(3333);
 }
 
