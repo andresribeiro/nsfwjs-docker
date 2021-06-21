@@ -10,7 +10,7 @@ const upload = multer({ storage });
 app.use(express.json());
 
 async function main() {
-  const model = await nsfw.load("file://model/", { type: "graph" });
+  const model = await nsfw.load();
   tf.enableProdMode();
 
   app.post(
