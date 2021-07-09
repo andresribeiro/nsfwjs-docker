@@ -2,10 +2,9 @@ const express = require("express");
 const multer = require("multer");
 const tf = require("@tensorflow/tfjs-node");
 const nsfw = require("nsfwjs");
+const fetch = require('node-fetch');
 
 const app = express();
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
 
 app.use(express.json());
 
@@ -14,39 +13,36 @@ async function main() {
   tf.enableProdMode();
 
   app.post(
-    "/single/multipart-form",
-    upload.single("content"),
+    "/batch-classify",
     async (request, response) => {
-      const content = request.file;
-
-      const tfContent = await tf.node.decodeImage(content.buffer, 3);
-      const prediction = await model.classify(tfContent);
-      tfContent.dispose();
-
-      return response.json({ prediction });
-    }
-  );
-
-  app.post(
-    "/multiple/multipart-form",
-    upload.array("contents"),
-    async (request, response) => {
-      const contents = request.files;
+      const contents = request.body;
+      if (contents.images === undefined) {
+        return {code:400};
+      }
 
       const predictions = await Promise.all(
-        contents.map(async (content) => {
-          const tfContent = await tf.node.decodeImage(content.buffer, 3);
-          const prediction = await model.classify(tfContent);
-          tfContent.dispose();
-          return prediction;
+        contents.images.map(async (content) => {
+          if (content.url === undefined) {
+            return {code:400};
+          }
+          try {
+            const response = await fetch(content.url)
+            const buffer = await response.buffer();
+            const tfContent = await tf.node.decodeImage(buffer, 3);
+            const prediction = await model.classify(tfContent);
+            tfContent.dispose();
+            return {code:200, prediction: prediction};
+          } catch (error) {
+            return {code:400, msg: error.message};
+          }
         })
       );
 
-      return response.json({ predictions });
+      return response.json({ predictions : predictions, code: 200 });
     }
   );
 
-  app.listen(3333);
+  app.listen(8080);
 }
 
 main();
