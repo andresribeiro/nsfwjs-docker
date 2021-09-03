@@ -11,7 +11,7 @@ async function main() {
   tf.enableProdMode()
 
   app.post('/batch-classify', async (request, response) => {
-    const contents = request.body
+    let contents = request.body
     if (contents.images === undefined) {
       return { code: 400 }
     }
@@ -22,11 +22,14 @@ async function main() {
           return { code: 400 }
         }
         try {
-          const response = await fetch(content.url)
-          const buffer = await response.buffer()
-          const tfContent = await tf.node.decodeImage(buffer, 3)
-          const prediction = await model.classify(tfContent)
+          let response = await fetch(content.url)
+          let buffer = await response.buffer()
+          let tfContent = await tf.node.decodeImage(buffer, 3)
+          let prediction = await model.classify(tfContent)
           tfContent.dispose()
+          buffer = null
+          response = null
+          tfContent = null
           return { code: 200, prediction: prediction }
         } catch (error) {
           return { code: 400, msg: error.message }
