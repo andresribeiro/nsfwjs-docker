@@ -1,51 +1,28 @@
 # nsfwjs-docker
 
-A Docker REST API for NSFW detection with [NSFWJS](https://github.com/infinitered/nsfwjs). You can find it on the Docker Hub [here](https://hub.docker.com/r/andresribeiroo/nsfwjs)
+A Docker REST API for NSFW detection with [NSFWJS](https://github.com/infinitered/nsfwjs). 
+Fork to https://github.com/andresribeiro/nsfwjs-docker
 
-## Installation
+## start
 
 ```shell
-docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs
+yarn start
+```
+## build
+
+```shell
+docker build . -t nsfwjs
 ```
 
 ## Usage
 
-#### One image, multipart/form-data
+#### Multiple images
 
-`POST` request to `/single/multipart-form` sending an image in the `content` field
-
-```
-{
-  "prediction": [
-    {
-      "className": "Neutral",
-      "probability": 0.6371303796768188
-    },
-    {
-      "className": "Drawing",
-      "probability": 0.3603636920452118
-    },
-    {
-      "className": "Hentai",
-      "probability": 0.0024505197070538998
-    },
-    {
-      "className": "Sexy",
-      "probability": 0.00003775714503717609
-    },
-    {
-      "className": "Porn",
-      "probability": 0.000017730137187754735
-    }
-  ]
-}
-```
-
-#### Multiple images, multipart/form-data
-
-`POST` request to `/multiple/multipart-form` sending images in the `contents` field
+`POST` request to `/batch-classify` sending images url in the `contents` field
 
 ```
+curl -X POST -H 'Content-Type: application/json'  -d '{"images": [{"url":"https://image/url"}]}' http://0.0.0.0:8080/batch-classify
+
 {
   "predictions": [
     [
@@ -96,10 +73,3 @@ docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs
 }
 ```
 
-## PS
-
-Maybe I don't know what I'm doing. If anything starts to catch fire, move away
-
-## Author
-
-André Ribeiro, made for my app [Drakkle](https://drakkle.com.br)
