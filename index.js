@@ -19,11 +19,9 @@ async function main() {
     async (request, response) => {
       const content = request.file;
 
-      const tfContent = await tf.node.decodeImage(content.buffer, 3);
-      const prediction = await model.classify(tfContent);
-      tfContent.dispose();
-
-      return response.json({ prediction });
+      return content
+        ? response.json({ prediction: await getPrediction(model, content) })
+        : response.status(422).json({ error: 'No image provided' });
     }
   );
 
@@ -33,13 +31,12 @@ async function main() {
     async (request, response) => {
       const contents = request.files;
 
+      if (!content || !content.length) {
+        return response.status(422).json({ error: 'No images provided' });
+      }
+
       const predictions = await Promise.all(
-        contents.map(async (content) => {
-          const tfContent = await tf.node.decodeImage(content.buffer, 3);
-          const prediction = await model.classify(tfContent);
-          tfContent.dispose();
-          return prediction;
-        })
+        contents.map(content => getPrediction(model, content))
       );
 
       return response.json({ predictions });
@@ -47,6 +44,14 @@ async function main() {
   );
 
   app.listen(3333);
+}
+
+async function getPrediction(model, content) {
+  const tfContent = await tf.node.decodeImage(content.buffer, 3);
+  const prediction = await model.classify(tfContent);
+  tfContent.dispose();
+
+  return prediction;
 }
 
 main();
