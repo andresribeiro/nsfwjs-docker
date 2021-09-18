@@ -1,8 +1,14 @@
-FROM node:alpine
+FROM node:buster-slim
 
 WORKDIR /usr/app
 
-RUN apk add build-base && apk add --no-cache python3 py3-pip
+RUN apt-get update && \ 
+  apt-get install -y build-essential \
+  wget \
+  python3 \
+  make \
+  gcc \ 
+  libc6-dev 
 
 COPY package.json yarn.lock ./
 RUN yarn install
