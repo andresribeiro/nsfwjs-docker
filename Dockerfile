@@ -3,9 +3,11 @@ FROM node:lts
 WORKDIR /usr/app
 
 COPY package.json yarn.lock ./
-RUN yarn install --prod
+RUN yarn install
 
 COPY . .
+
+RUN yarn build
 
 EXPOSE 3333
 
