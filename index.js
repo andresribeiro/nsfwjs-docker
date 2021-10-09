@@ -2,6 +2,7 @@ const express = require('express')
 const tf = require('@tensorflow/tfjs-node')
 const nsfw = require('nsfwjs')
 const fetch = require('node-fetch')
+const fileType = require('file-type');
 const app = express()
 
 app.use(express.json())
@@ -24,12 +25,19 @@ async function main() {
         try {
           let response = await fetch(content.url)
           let buffer = await response.buffer()
-          let tfContent = await tf.node.decodeImage(buffer, 3)
-          let prediction = await model.classify(tfContent)
-          tfContent.dispose()
+          let fType = await fileType.fromBuffer(buffer)
+          let prediction
+          if (fType.mime == "image/gif") {
+            prediction = await model.classifyGif(buffer, { topk: 5, fps: 1 })
+          } else {
+            let image = await tf.node.decodeImage(buffer, 3)
+            prediction = await model.classify(image)
+            image.dispose()
+            image = null
+          }
+
           buffer = null
           response = null
-          tfContent = null
           return { code: 200, prediction: prediction }
         } catch (error) {
           return { code: 400, msg: error.message }
