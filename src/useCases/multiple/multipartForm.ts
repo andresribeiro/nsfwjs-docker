@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { getPrediction } from "../../getPrediction";
+import { getPrediction } from "../../getPrediction.js";
 import { FromSchema } from "json-schema-to-ts";
 
 export const multipleMultipartFormBodySchema = {

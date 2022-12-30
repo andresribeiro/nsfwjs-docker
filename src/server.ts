@@ -1,24 +1,36 @@
 import fastify from "fastify";
 import multipart from "fastify-multipart";
 
-import { routes } from "./routes";
+import { routes } from "./routes.js";
 
-async function main() {
-	const app = fastify({
-		logger: true,
-		bodyLimit: 1048576 * 100,
+const fastifyServer = fastify({
+	logger: true,
+	bodyLimit: 1048576 * 100,
+});
+
+fastifyServer.register(multipart, {
+	addToBody: true,
+	sharedSchemaId: "#mySharedSchema",
+});
+
+fastifyServer.register(routes);
+
+await fastifyServer.listen({ port: 3333, host: "0.0.0.0" });
+
+console.log("Server started 🚀");
+
+function handleOnSignal(signal: NodeJS.Signals) {
+	console.log(`closing due to ${signal} signal`);
+
+	fastifyServer.close().then(() => {
+		process.exit();
 	});
-
-	app.register(multipart, {
-		addToBody: true,
-		sharedSchemaId: "#mySharedSchema",
-	});
-
-	app.register(routes);
-
-	await app.listen(3333, "0.0.0.0");
-
-	console.log("Server started 🚀");
 }
 
-main();
+process.on("SIGINT", () => {
+	handleOnSignal("SIGINT");
+});
+
+process.on("SIGHUP", () => {
+	handleOnSignal("SIGHUP");
+});

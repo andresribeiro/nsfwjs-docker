@@ -7,15 +7,15 @@ import {
 import {
 	SingleMultipartForm,
 	singleMultipartFormBodySchema,
-} from "@useCases/single/multipartForm";
+} from "@useCases/single/multipartForm.js";
 import {
 	MultipleMultipartForm,
 	multipleMultipartFormBodySchema,
-} from "@useCases/multiple/multipartForm";
+} from "@useCases/multiple/multipartForm.js";
 
 export function routes(
 	fastify: FastifyInstance,
-	opts: FastifyRegisterOptions<FastifyPluginOptions> | undefined,
+	_opts: FastifyRegisterOptions<FastifyPluginOptions> | undefined,
 	done: (err?: Error | undefined) => void,
 ) {
 	fastify.post(
