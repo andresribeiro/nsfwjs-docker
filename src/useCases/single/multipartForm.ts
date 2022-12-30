@@ -1,37 +1,37 @@
-import { FastifyRequest, FastifyReply } from 'fastify'
-import { getPrediction } from '../../getPrediction'
-import { FromSchema } from 'json-schema-to-ts'
+import { FastifyRequest, FastifyReply } from "fastify";
+import { getPrediction } from "../../getPrediction";
+import { FromSchema } from "json-schema-to-ts";
 
 export const singleMultipartFormBodySchema = {
-  type: 'object',
-  properties: {
-    content: {
-      type: 'array',
-      items: {
-        $ref: '#mySharedSchema'
-      }
-    }
-  },
-  required: ['content']
-} as const
+	type: "object",
+	properties: {
+		content: {
+			type: "array",
+			items: {
+				$ref: "#mySharedSchema",
+			},
+		},
+	},
+	required: ["content"],
+} as const;
 
 type BodyEntry = {
-  data: Buffer;
-  filename: string;
-  encoding: string;
-  mimetype: string;
-  limit: false;
+	data: Buffer;
+	filename: string;
+	encoding: string;
+	mimetype: string;
+	limit: false;
 };
 
-export async function SingleMultipartForm (
-  request: FastifyRequest<{
-    Body: FromSchema<typeof singleMultipartFormBodySchema>;
-  }>,
-  reply: FastifyReply
+export async function SingleMultipartForm(
+	request: FastifyRequest<{
+		Body: FromSchema<typeof singleMultipartFormBodySchema>;
+	}>,
+	reply: FastifyReply,
 ) {
-  const image = request.body.content[0] as BodyEntry
+	const image = request.body.content[0] as BodyEntry;
 
-  return reply.send({
-    prediction: await getPrediction(image.data)
-  })
+	return reply.send({
+		prediction: await getPrediction(image.data),
+	});
 }
