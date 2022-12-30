@@ -1,10 +1,9 @@
 import fastify from "fastify";
-import multipart from "fastify-multipart";
+import multipart from "@fastify/multipart";
 
 import { routes } from "./routes.js";
 
 const fastifyServer = fastify({
-	logger: true,
 	bodyLimit: 1048576 * 100,
 });
 
