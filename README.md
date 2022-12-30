@@ -1,8 +1,17 @@
 # nsfwjs-docker
 
-A Docker REST API for NSFW detection with [NSFWJS](https://github.com/infinitered/nsfwjs). You can find it on the Docker Hub [here](https://hub.docker.com/r/andresribeiroo/nsfwjs)
+### Features ✨
 
-## Installation
+- ℹ️ Return predictions for `Neutral`, `Drawing`, `Sexy`, `Hentai` and `Porn`
+- 🎯 Pretty accurate (~93%)
+- 🖼️ Supports different image formats
+- ⚡ 250ms to make predictions to a single image
+
+### About 🗞️
+
+A Docker REST API for NSFW detection with [NSFWJS](https://github.com/infinitered/nsfwjs). You can find it on the Docker Hub [here](https://hub.docker.com/r/andresribeiroo/nsfwjs). Created for my social network app, [Drakkle](https://play.google.com/store/apps/details?id=com.andresribeiro.drakkle)
+
+### Installation ⚙️
 
 ```shell
 docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs:1.3
@@ -10,7 +19,7 @@ docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs:1.3
 
 If you are deploying in production, you will probably want to pass the `--restart always` flag to start the container whenever the server restarts
 
-## Usage
+### Usage 🔨
 
 #### One image, multipart/form-data
 
@@ -97,11 +106,3 @@ If you are deploying in production, you will probably want to pass the `--restar
   ]
 }
 ```
-
-## PS
-
-Maybe I don't know what I'm doing. If anything starts to catch fire, move away
-
-## Author
-
-André Ribeiro, made for my app [Drakkle](https://drakkle.com.br)
