@@ -1,12 +1,5 @@
 FROM node:buster-slim as builder
 WORKDIR /usr/app
-RUN apt-get update && \ 
-  apt-get install -y build-essential \
-  wget \
-  python3 \
-  make \
-  gcc \ 
-  libc6-dev 
 RUN npm install -g pnpm
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install
