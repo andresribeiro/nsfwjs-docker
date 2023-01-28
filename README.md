@@ -14,7 +14,7 @@ A Docker REST API for NSFW detection with [NSFWJS](https://github.com/infinitere
 ### Installation ⚙️
 
 ```shell
-docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs:1.5
+docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs:1.6
 ```
 
 If you are deploying in production, you will probably want to pass the `--restart always` flag to start the container whenever the server restarts
