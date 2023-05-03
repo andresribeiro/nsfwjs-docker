@@ -13,9 +13,6 @@ dependencies:
   nsfwjs:
     specifier: ^2.4.2
     version: 2.4.2(@tensorflow/tfjs@3.21.0)
-  rome:
-    specifier: ^12.0.0
-    version: 12.0.0
   sharp:
     specifier: ^0.32.1
     version: 0.32.1
@@ -51,6 +48,9 @@ devDependencies:
   json-schema-to-ts:
     specifier: ^2.8.0
     version: 2.8.0
+  rome:
+    specifier: ^12.0.0
+    version: 12.0.0
   simple-git-hooks:
     specifier: ^2.8.1
     version: 2.8.1
@@ -397,7 +397,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: false
+    dev: true
     optional: true
 
   /@rometools/cli-darwin-x64@12.0.0:
@@ -405,7 +405,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: false
+    dev: true
     optional: true
 
   /@rometools/cli-linux-arm64@12.0.0:
@@ -413,7 +413,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: false
+    dev: true
     optional: true
 
   /@rometools/cli-linux-x64@12.0.0:
@@ -421,7 +421,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: false
+    dev: true
     optional: true
 
   /@rometools/cli-win32-arm64@12.0.0:
@@ -429,7 +429,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
-    dev: false
+    dev: true
     optional: true
 
   /@rometools/cli-win32-x64@12.0.0:
@@ -437,7 +437,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: false
+    dev: true
     optional: true
 
   /@sindresorhus/is@4.6.0:
@@ -3648,7 +3648,7 @@ packages:
       '@rometools/cli-linux-x64': 12.0.0
       '@rometools/cli-win32-arm64': 12.0.0
       '@rometools/cli-win32-x64': 12.0.0
-    dev: false
+    dev: true
 
   /run-async@2.4.1:
     resolution: {integrity: sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==}
