@@ -4,6 +4,8 @@ import sharp from "sharp";
 import { logger } from "./logger";
 
 tf.enableProdMode();
+sharp.cache(false);
+
 logger.info("Loading NSFW model");
 const model = await nsfwjs.load("file://src/model/", { type: "graph" });
 logger.info("Model loaded");
