@@ -40,7 +40,7 @@ Production: add `--restart always`.
 - TF graph model in `src/model/` (loaded via `file://src/model/`).
 - Classifies 5 classes: Neutral, Drawing, Sexy, Hentai, Porn.
 - Image preprocessed: resize to 224×224 cover → remove alpha → raw RGB tensor (no JPEG encode).
-- ~250ms per prediction.
+- ~100ms per prediction.
 
 ## Conventions
 
