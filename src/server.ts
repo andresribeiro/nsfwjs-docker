@@ -1,42 +1,25 @@
 import { Hono } from "hono";
-import { getPrediction } from "./getPrediction";
+import { getPrediction } from "./get-prediction";
 
 const server = new Hono();
 
-server.post("/single/multipart-form", async (c) => {
-	const body = await c.req.parseBody();
-	const image = body.content;
-	if (typeof image === "string") {
-		return c.json({ error: "invalid content" });
-	}
-	const buffer = await image?.arrayBuffer();
-	if (!buffer) {
-		return c.json({ error: "invalid content" });
-	}
-	return c.json({ prediction: await getPrediction(Buffer.from(buffer)) });
-});
-server.post("/multiple/multipart-form", async (c) => {
-	const body = await c.req.parseBody({ all: true });
-	const contents = body.contents;
-	if (!contents) {
-		return c.json({ error: "no contents field provided" }, 400);
-	}
-	const files = Array.isArray(contents) ? contents : [contents];
-	const imageFiles = files.filter((item): item is File => item instanceof File);
-	if (imageFiles.length !== files.length || imageFiles.length === 0) {
-		return c.json({ error: "invalid contents fields" }, 400);
-	}
-	const predictions = await Promise.all(
-		imageFiles.map(async (file) => {
-			const arrayBuffer = await file.arrayBuffer();
-			const buffer = Buffer.from(arrayBuffer);
-			return getPrediction(buffer);
-		}),
-	);
-	return c.json({ predictions });
+server.post("/classify", async (c) => {
+  const body = await c.req.parseBody();
+  const image = body.image;
+  if (typeof image === "string") {
+    return c.json({ error: "invalid image" });
+  }
+  const buffer = await image?.arrayBuffer();
+  if (!buffer) {
+    return c.json({ error: "invalid image" });
+  }
+  console.time();
+  const prediction = await getPrediction(Buffer.from(buffer));
+  console.timeEnd();
+  return c.json({ prediction });
 });
 
 export default {
-	port: 3333,
-	fetch: server.fetch,
+  port: 3333,
+  fetch: server.fetch,
 };
