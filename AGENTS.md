@@ -7,6 +7,7 @@
 - **Formatter/Linter:** Biome (tab indent, double quotes). No ESLint/Prettier.
 - **ML:** `@tensorflow/tfjs-node` + `nsfwjs` (graph model loaded from `src/model/` at startup).
 - **Image processing:** `sharp` (requires `libjemalloc2` – installed in Dockerfile).
+- **Logging:** `@logtape/logtape` (ANSI color formatter). Logger configured in `src/logger.ts`, exported as `logger`.
 
 ## Commands
 
@@ -38,7 +39,7 @@ Production: add `--restart always`.
 
 - TF graph model in `src/model/` (loaded via `file://src/model/`).
 - Classifies 5 classes: Neutral, Drawing, Sexy, Hentai, Porn.
-- Image preprocessed: JPEG → resize to 1080×1080 cover.
+- Image preprocessed: resize to 224×224 cover → remove alpha → raw RGB tensor (no JPEG encode).
 - ~250ms per prediction.
 
 ## Conventions

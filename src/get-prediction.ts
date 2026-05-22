@@ -1,14 +1,16 @@
 import * as tf from "@tensorflow/tfjs-node";
 import * as nsfwjs from "nsfwjs";
 import sharp from "sharp";
+import { logger } from "./logger";
 
 tf.enableProdMode();
+logger.info("Loading NSFW model");
 const model = await nsfwjs.load("file://src/model/", { type: "graph" });
+logger.info("Model loaded");
 
 export async function getPrediction(imageBuffer: Buffer) {
   const { data, info } = await sharp(imageBuffer)
     .resize({
-      // The default NSFWJS model (MobileNet) expects 224x224 images
       width: 224,
       height: 224,
       fit: "cover",
@@ -24,5 +26,6 @@ export async function getPrediction(imageBuffer: Buffer) {
   );
   const prediction = await model.classify(tfImage);
   tfImage.dispose();
+  logger.debug("Prediction: {prediction}", { prediction });
   return prediction;
 }

@@ -7,7 +7,7 @@ Docker-Powered Self-Hosted NSFW Detection API ([NSFWJS](https://github.com/infin
 - ℹ️ Return predictions for `Neutral`, `Drawing`, `Sexy`, `Hentai` and `Porn`
 - 🎯 Pretty accurate (~93%)
 - 🖼️ Supports different image formats
-- ⚡ 250ms to make predictions to a single image
+- ⚡ 100ms to make predictions to a single image
 
 ## Installation ⚙️
 

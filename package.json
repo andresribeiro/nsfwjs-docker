@@ -17,6 +17,7 @@
 		"typescript": "^6.0.3"
 	},
 	"dependencies": {
+		"@logtape/logtape": "^2.1.1",
 		"@tensorflow/tfjs-node": "^4.22.0",
 		"hono": "^4.12.22",
 		"nsfwjs": "^4.3.0",
