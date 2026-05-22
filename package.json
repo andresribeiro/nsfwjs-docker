@@ -10,16 +10,16 @@
 		"lint:fix": "bunx biome format --write"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.4.2",
-		"@types/bun": "latest"
+		"@biomejs/biome": "^2.4.15",
+		"@types/bun": "^1.3.14"
 	},
 	"peerDependencies": {
-		"typescript": "^5"
+		"typescript": "^6.0.3"
 	},
 	"dependencies": {
 		"@tensorflow/tfjs-node": "^4.22.0",
-		"hono": "^4.11.9",
-		"nsfwjs": "^4.2.1",
+		"hono": "^4.12.22",
+		"nsfwjs": "^4.3.0",
 		"sharp": "^0.34.5"
 	},
 	"trustedDependencies": [
