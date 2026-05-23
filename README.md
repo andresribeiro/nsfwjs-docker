@@ -6,10 +6,11 @@
 
 High-performance, self-hosted NSFW detection API powered by [NSFWJS](https://github.com/infinitered/nsfwjs).
 
-- **Accuracy:** ~93%
-- **Latency:** ~100ms per prediction
-- **Input:** JPEG, PNG, WebP, AVIF, TIFF, GIF (first frame), raw pixel data
-- **Output:** 5-class classification — Neutral, Drawing, Sexy, Hentai, Porn
+- **Accuracy:** ~93%;
+- **Latency:** ~100ms per prediction;
+- **Input:** JPEG, PNG, WebP, AVIF, TIFF, GIF (first frame), raw pixel data;
+- **Output:** 5-class classification — Neutral, Drawing, Sexy, Hentai, Porn;
+- **Memory:** Runs under 250 MB of RAM.
 
 ## Table of Contents
 
