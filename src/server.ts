@@ -10,10 +10,9 @@ server.post("/classify", async (c) => {
 		logger.warn("Empty request body");
 		return c.json({ error: "invalid image" });
 	}
-	const bytes = new Uint8Array(buffer);
-	logger.debug("Classifying image ({size} bytes)", { size: bytes.byteLength });
+	logger.debug("Classifying image ({size} bytes)", { size: buffer.byteLength });
 	const start = performance.now();
-	const prediction = await getPrediction(bytes);
+	const prediction = await getPrediction(buffer);
 	const elapsed = Math.round(performance.now() - start);
 	logger.info("Prediction complete in {elapsed}ms", { elapsed, prediction });
 	return c.json({ prediction });

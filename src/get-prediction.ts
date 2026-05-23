@@ -10,7 +10,7 @@ logger.info("Loading NSFW model");
 const model = await nsfwjs.load("file://src/model/", { type: "graph" });
 logger.info("Model loaded");
 
-export async function getPrediction(imageBuffer: Uint8Array) {
+export async function getPrediction(imageBuffer: ArrayBuffer) {
 	// resolveWithObject is not needed — resize guarantees 224x224 output.
 	// Model expects 224x224; sharp resizes faster than TF.js would internally.
 	const data = await sharp(imageBuffer)
@@ -18,11 +18,7 @@ export async function getPrediction(imageBuffer: Uint8Array) {
 		.removeAlpha()
 		.raw()
 		.toBuffer();
-	const tfImage = tf.tensor3d(
-		data as unknown as Uint8Array,
-		[224, 224, 3],
-		"int32",
-	);
+	const tfImage = tf.tensor3d(new Uint8Array(data), [224, 224, 3], "int32");
 	try {
 		const prediction = await model.classify(tfImage);
 		logger.debug("Prediction: {prediction}", { prediction });
