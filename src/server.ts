@@ -5,17 +5,12 @@ import { logger } from "./logger";
 const server = new Hono();
 
 server.post("/classify", async (c) => {
-	const body = await c.req.parseBody();
-	const image = body.image;
-	if (typeof image === "string") {
-		logger.warn("Received non-file image field");
+	const buffer = await c.req.arrayBuffer();
+	if (!buffer) {
+		logger.warn("Empty request body");
 		return c.json({ error: "invalid image" });
 	}
-	const bytes = await image?.bytes();
-	if (!bytes) {
-		logger.warn("Empty image buffer");
-		return c.json({ error: "invalid image" });
-	}
+	const bytes = new Uint8Array(buffer);
 	logger.debug("Classifying image ({size} bytes)", { size: bytes.byteLength });
 	const start = performance.now();
 	const prediction = await getPrediction(bytes);

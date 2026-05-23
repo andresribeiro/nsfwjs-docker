@@ -28,7 +28,7 @@ export async function getPrediction(imageBuffer: Uint8Array) {
     logger.debug("Prediction: {prediction}", { prediction });
     return prediction;
   } finally {
-    // ALWAYS execute memory disposal, even if model.classify fails
+    // always execute memory disposal, even if model.classify fails
     tfImage.dispose();
   }
 }
