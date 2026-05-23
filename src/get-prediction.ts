@@ -10,7 +10,7 @@ logger.info("Loading NSFW model");
 const model = await nsfwjs.load("file://src/model/", { type: "graph" });
 logger.info("Model loaded");
 
-export async function getPrediction(imageBuffer: ArrayBuffer) {
+export async function getPrediction(imageBuffer: Uint8Array) {
   // resolveWithObject is not needed — resize guarantees 224x224 output.
   // Model expects 224x224; sharp resizes faster than TF.js would internally.
   const data = await sharp(imageBuffer)
