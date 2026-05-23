@@ -25,13 +25,13 @@ High-performance, self-hosted NSFW detection API powered by [NSFWJS](https://git
 ## Installation
 
 ```shell
-docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs:2.0
+docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs:3.0
 ```
 
 For production, add `--restart always`:
 
 ```shell
-docker run -p 3333:3333 -d --restart always --name nsfwjs andresribeiroo/nsfwjs:2.0
+docker run -p 3333:3333 -d --restart always --name nsfwjs andresribeiroo/nsfwjs:3.0
 ```
 
 ## Usage
