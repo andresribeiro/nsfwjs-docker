@@ -11,7 +11,15 @@ High-performance, self-hosted NSFW detection API powered by [NSFWJS](https://git
 - **Input:** JPEG, PNG, WebP, AVIF, TIFF, GIF (first frame), raw pixel data
 - **Output:** 5-class classification — Neutral, Drawing, Sexy, Hentai, Porn
 
----
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Examples](#examples)
+- [Performance](#performance)
+- [Build from source](#build-from-source)
+- [Local development](#local-development)
+- [License](#license)
 
 ## Installation
 
@@ -44,8 +52,6 @@ docker run -p 3333:3333 -d --restart always --name nsfwjs andresribeiroo/nsfwjs:
 ```
 
 The probability of each category ranges from 0 (lowest) to 1 (highest).
-
----
 
 ## Examples
 
@@ -90,7 +96,14 @@ curl -X POST \
   http://localhost:3333/classify
 ```
 
----
+## Performance
+
+This container is built for speed:
+
+- **SIMD-accelerated image processing** — `sharp` (powered by libvips) handles image decoding and resizing to 224×224 before inference, taking advantage of SIMD instructions on compatible CPUs.
+- **jemalloc allocator** — The Docker image links against `jemalloc`, which reduces fragmentation and improves memory usage under concurrent workloads compared to the glibc allocator.
+- **Model failure safety** — If an error occurs during model inference, the underlying TensorFlow tensors are disposed of immediately, guaranteeing that GPU/CPU memory is not leaked.
+- **Raw binary transport** — The API accepts `application/octet-stream` instead of multipart form data or base64-encoded JSON. This avoids the overhead of multipart parsing and base64 expansion, resulting in faster decoding and lower network transfer times.
 
 ## Build from source
 
@@ -110,8 +123,6 @@ bun run start   # production mode
 ```
 
 The server listens on **port 3333**.
-
----
 
 ## License
 
