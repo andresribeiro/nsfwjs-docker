@@ -25,9 +25,9 @@ For production, add `--restart always`:
 docker run -p 3333:3333 -d --restart always --name nsfwjs andresribeiroo/nsfwjs:2.0
 ```
 
-## API
+## Usage
 
-### `POST /classify`
+`POST` the raw image bytes to `/classify` with `Content-Type: application/octet-stream`.
 
 ### Example Response:
 
@@ -43,19 +43,13 @@ docker run -p 3333:3333 -d --restart always --name nsfwjs andresribeiroo/nsfwjs:
 }
 ```
 
-| Property     | Value                                                         |
-|-------------|---------------------------------------------------------------|
-| Content-Type | `application/octet-stream`                                   |
-| Body        | Raw image bytes (no multipart, no encoding)                   |
-| Response    | `{ "prediction": [{ className: string, probability: number }] }` |
-
-Probabilities sum to 1.0 and are sorted in descending order.
+The probability of each category ranges from 0 (lowest) to 1 (highest).
 
 ---
 
 ## Examples
 
-### Node.js fetch / Browser fetch
+### Node.js / Browser
 
 ```js
 const res = await fetch("http://localhost:3333/classify", {
@@ -98,14 +92,14 @@ curl -X POST \
 
 ---
 
-### Build from source
+## Build from source
 
 ```shell
 docker build -t nsfwjs .
 docker run -p 3333:3333 nsfwjs
 ```
 
-### Local development
+## Local development
 
 Requires [Bun](https://bun.sh).
 
