@@ -1,6 +1,6 @@
 # nsfwjs-docker [![Docker Pulls](https://img.shields.io/docker/pulls/andresribeiroo/nsfwjs.svg)](https://hub.docker.com/r/andresribeiroo/nsfwjs)
 
-nsfwjs-docker is a highly optimized Self-Hosted NSFW Detection API that uses [NSFWJS](https://github.com/infinitered/nsfwjs) under the hood. All you need to run it is Docker, and you can find it on the Docker Hub [here](https://hub.docker.com/r/andresribeiroo/nsfwjs).
+This is a highly optimized Self-Hosted NSFW Detection API that uses [NSFWJS](https://github.com/infinitered/nsfwjs) under the hood. All you need to run it is Docker, and you can find it on the Docker Hub [here](https://hub.docker.com/r/andresribeiroo/nsfwjs).
 
 ## Features
 
