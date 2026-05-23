@@ -1,13 +1,17 @@
-# nsfwjs-docker [![Docker Pulls](https://img.shields.io/docker/pulls/andresribeiroo/nsfwjs.svg)](https://hub.docker.com/r/andresribeiroo/nsfwjs)
+# nsfwjs-docker
 
-This is a highly optimized Self-Hosted NSFW Detection API that uses [NSFWJS](https://github.com/infinitered/nsfwjs) under the hood. All you need to run it is Docker, and you can find it on the Docker Hub [here](https://hub.docker.com/r/andresribeiroo/nsfwjs).
+[![Docker Pulls](https://img.shields.io/docker/pulls/andresribeiroo/nsfwjs.svg)](https://hub.docker.com/r/andresribeiroo/nsfwjs)
+[![License](https://img.shields.io/github/license/andresribeiro/nsfwjs-docker)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/andresribeiro/nsfwjs-docker)](https://github.com/anomalyco/nsfwjs-docker)
 
-## Features
+High-performance, self-hosted NSFW detection API powered by [NSFWJS](https://github.com/infinitered/nsfwjs).
 
-- Return predictions for `Neutral`, `Drawing`, `Sexy`, `Hentai` and `Porn`
-- Pretty accurate (~93%)
-- Supports JPEG, PNG, WebP, AVIF, TIFF, GIF (single frame) and raw pixel data
-- ~100ms per prediction
+- **Accuracy:** ~93%
+- **Latency:** ~100ms per prediction
+- **Input:** JPEG, PNG, WebP, AVIF, TIFF, GIF (first frame), raw pixel data
+- **Output:** 5-class classification — Neutral, Drawing, Sexy, Hentai, Porn
+
+---
 
 ## Installation
 
@@ -15,38 +19,39 @@ This is a highly optimized Self-Hosted NSFW Detection API that uses [NSFWJS](htt
 docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs:2.0
 ```
 
-If you are deploying in production, you will probably want to pass the `--restart always` flag to start the container whenever the server restarts.
+For production, add `--restart always`:
 
-## Usage
-
-`POST` the raw image bytes to `/classify` with `Content-Type: application/octet-stream`.
-
+```shell
+docker run -p 3333:3333 -d --restart always --name nsfwjs andresribeiroo/nsfwjs:2.0
 ```
+
+## API
+
+### `POST /classify`
+
+### Example Response:
+
+```json
 {
   "prediction": [
-    {
-      "className": "Neutral",
-      "probability": 0.6371303796768188
-    },
-    {
-      "className": "Drawing",
-      "probability": 0.3603636920452118
-    },
-    {
-      "className": "Hentai",
-      "probability": 0.0024505197070538998
-    },
-    {
-      "className": "Sexy",
-      "probability": 0.00003775714503717609
-    },
-    {
-      "className": "Porn",
-      "probability": 0.000017730137187754735
-    }
+    { "className": "Neutral",  "probability": 0.637 },
+    { "className": "Drawing",  "probability": 0.360 },
+    { "className": "Hentai",   "probability": 0.002 },
+    { "className": "Sexy",     "probability": 0.000 },
+    { "className": "Porn",     "probability": 0.000 }
   ]
 }
 ```
+
+| Property     | Value                                                         |
+|-------------|---------------------------------------------------------------|
+| Content-Type | `application/octet-stream`                                   |
+| Body        | Raw image bytes (no multipart, no encoding)                   |
+| Response    | `{ "prediction": [{ className: string, probability: number }] }` |
+
+Probabilities sum to 1.0 and are sorted in descending order.
+
+---
 
 ## Examples
 
@@ -58,9 +63,7 @@ const res = await fetch("http://localhost:3333/classify", {
   headers: { "Content-Type": "application/octet-stream" },
   body: imageBlobOrBuffer,
 });
-const data = await res.json();
-console.log(data.prediction);
-// [{ className: "Neutral", probability: 0.637 }, ...]
+const { prediction } = await res.json();
 ```
 
 ### Python
@@ -92,3 +95,30 @@ curl -X POST \
   --data-binary @image.jpg \
   http://localhost:3333/classify
 ```
+
+---
+
+### Build from source
+
+```shell
+docker build -t nsfwjs .
+docker run -p 3333:3333 nsfwjs
+```
+
+### Local development
+
+Requires [Bun](https://bun.sh).
+
+```shell
+bun install
+bun run dev     # watch mode (restarts on file changes)
+bun run start   # production mode
+```
+
+The server listens on **port 3333**.
+
+---
+
+## License
+
+MIT
