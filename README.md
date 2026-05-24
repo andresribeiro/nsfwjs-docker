@@ -97,7 +97,7 @@ This container is built for speed:
 
 - **SIMD-accelerated image processing** — `sharp` (powered by libvips) handles image decoding and resizing to 224×224 before inference, taking advantage of SIMD instructions on compatible CPUs.
 - **jemalloc allocator** — The Docker image links against `jemalloc`, which reduces fragmentation and improves memory usage under concurrent workloads compared to the glibc allocator.
-- **Model failure safety** — If an error occurs during model inference, the underlying TensorFlow tensors are immediately disposed of. This architectural fallback completely prevents GPU/CPU memory leaks under any failure condition.
+- **Model failure safety** — If an error occurs during model inference, the underlying TensorFlow tensors are immediately disposed of. This architectural fallback completely prevents CPU memory leaks under any failure condition.
 - **Raw binary transport** — The API accepts `application/octet-stream` instead of multipart form data or base64-encoded JSON. This avoids the overhead of multipart parsing and base64 expansion, resulting in faster decoding and lower network transfer times.
 
 ## Build from source
