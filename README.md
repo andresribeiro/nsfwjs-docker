@@ -27,7 +27,7 @@ High-performance, self-hosted NSFW detection API powered by
 ## Installation
 
 ```shell
-docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs
+docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs-docker
 ```
 
 ## Usage
