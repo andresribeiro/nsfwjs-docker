@@ -1,0 +1,29 @@
+{
+  "nodeModulesDir": "manual",
+  "minimumDependencyAge": "4320",
+  "tasks": {
+    "dev": "TF_CPP_MIN_LOG_LEVEL=1 deno --watch --allow-all entry.ts",
+    "start": "TF_CPP_MIN_LOG_LEVEL=1 deno --allow-all entry.ts",
+    "lint": "deno lint",
+    "format": "deno fmt",
+    "check": "deno check --unstable-tsgo entry.ts"
+  },
+  "imports": {
+    "@hono/hono": "jsr:@hono/hono@^4.12.21",
+    "@logtape/logtape": "jsr:@logtape/logtape@^2.1.1",
+    "@tensorflow/tfjs-node": "npm:@tensorflow/tfjs-node@^4.22.0",
+    "nsfwjs": "npm:nsfwjs@^4.3.0",
+    "sharp": "npm:sharp@^0.34.5"
+  },
+  "lint": {
+    "exclude": ["model/**"]
+  },
+  "fmt": {
+    "exclude": ["model/**"]
+  },
+  "allowScripts": [
+    "npm:@tensorflow/tfjs-node@4.22.0",
+    "npm:core-js@3.29.1",
+    "npm:sharp@0.34.5"
+  ]
+}
