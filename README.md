@@ -34,6 +34,10 @@ docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs:3.0
 
 ### Example Response:
 
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+```
 ```json
 {
   "prediction": [
