@@ -22,7 +22,6 @@ High-performance, self-hosted NSFW detection API powered by
 - [Performance](#performance)
 - [Build from source](#build-from-source)
 - [Local development](#local-development)
-- [License](#license)
 
 ## Installation
 
