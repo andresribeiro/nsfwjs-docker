@@ -27,7 +27,7 @@ High-performance, self-hosted NSFW detection API powered by
 ## Installation
 
 ```shell
-docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs:3.0
+docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs
 ```
 
 ## Usage
@@ -126,11 +126,13 @@ docker run -p 3333:3333 nsfwjs
 
 ## Local development
 
-Requires [Deno](https://deno.com).
+Requires [Deno](https://deno.com) and [NodeJS](https://nodejs.org).
 
 ```shell
-deno task dev     # watch mode (restarts on file changes)
-deno task start   # production mode
+deno install                                               # install dependencies
+npm rebuild @tensorflow/tfjs-node --build-from-source      # rebuild TensorFlow, required on arm64
+deno task dev                                              # watch mode (restarts on file changes)
+deno task start                                            # production mode
 ```
 
 The server listens on port `3333`.
