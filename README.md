@@ -28,12 +28,6 @@ High-performance, self-hosted NSFW detection API powered by [NSFWJS](https://git
 docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs:3.0
 ```
 
-For production, add `--restart always`:
-
-```shell
-docker run -p 3333:3333 -d --restart always --name nsfwjs andresribeiroo/nsfwjs:3.0
-```
-
 ## Usage
 
 `POST` the raw image bytes to `/classify` with `Content-Type: application/octet-stream`.
@@ -123,8 +117,28 @@ bun run dev     # watch mode (restarts on file changes)
 bun run start   # production mode
 ```
 
-The server listens on **port 3333**.
+The server listens on port `3333`.
 
 ## License
 
-MIT
+MIT License
+
+Copyright (c) 2021 André Ribeiro
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
