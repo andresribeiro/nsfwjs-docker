@@ -27,6 +27,9 @@ High-performance, self-hosted NSFW detection API powered by
 
 ```shell
 docker run -p 3333:3333 -d --name nsfwjs andresribeiroo/nsfwjs
+
+# Optional: require an API key for /classify
+docker run -p 3333:3333 -d --name nsfwjs -e API_KEY=your-secret andresribeiroo/nsfwjs
 ```
 
 ## Usage
@@ -59,6 +62,29 @@ The probability of each category ranges from 0 (lowest) to 1 (highest).
 
 `GET /status` returns `200` with `{ "ok": true }` once the model is loaded and
 the server is accepting requests.
+
+### Authentication
+
+Authentication is optional. Start the container with `API_KEY` set to require a
+key on `POST /classify`:
+
+```shell
+docker run -p 3333:3333 -d --name nsfwjs -e API_KEY=your-secret andresribeiroo/nsfwjs
+```
+
+Send the key as a bearer token or in the `X-API-Key` header:
+
+```shell
+curl -X POST \
+  -H "Authorization: Bearer your-secret" \
+  -H "Content-Type: application/octet-stream" \
+  --data-binary @image.jpg \
+  http://localhost:3333/classify
+```
+
+Requests without a valid key return `401 Unauthorized` with
+`{ "error": "unauthorized" }`. When `API_KEY` is unset, no authentication is
+required.
 
 ### Errors
 

@@ -17,8 +17,10 @@
 ## API
 
 - `POST /classify` — **`Content-Type: application/octet-stream`** (raw image
-  bytes). Returns `{ prediction: [{ className, probability }] }`.
-- `GET /status` — health check. Returns `{ ok: true }`.
+  bytes). Returns `{ prediction: [{ className, probability }] }`. When
+  `API_KEY` is set, requires `Authorization: Bearer <key>` or `X-API-Key: <key>`
+  and otherwise returns `401 { error: "unauthorized" }`.
+- `GET /status` — public health check. Returns `{ ok: true }`.
 - Port **3333** (hardcoded in `server.ts`).
 
 ## Commands

@@ -1,13 +1,33 @@
+import { timingSafeEqual } from "node:crypto";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { getPrediction, InvalidImageError } from "./get-prediction.ts";
 import { logger } from "./logger.ts";
+
+const apiKey = process.env.API_KEY;
+
+function isValidApiKey(candidate: string): boolean {
+  // API_KEY is optional: when unset, every request is allowed.
+  if (!apiKey) return true;
+  const expected = Buffer.from(apiKey);
+  const actual = Buffer.from(candidate);
+  return expected.length === actual.length && timingSafeEqual(expected, actual);
+}
 
 const app = new Hono();
 
 app.get("/status", (c) => c.json({ ok: true }));
 
 app.post("/classify", async (c) => {
+  if (apiKey) {
+    const authorization = c.req.header("authorization");
+    const bearer = authorization?.match(/^Bearer\s+(.+)$/i)?.[1];
+    const candidate = c.req.header("x-api-key") ?? bearer;
+    if (!candidate || !isValidApiKey(candidate)) {
+      logger.warn("Unauthorized request");
+      return c.json({ error: "unauthorized" }, 401);
+    }
+  }
   const buffer = await c.req.arrayBuffer();
   if (buffer.byteLength === 0) {
     logger.warn("Empty request body");
