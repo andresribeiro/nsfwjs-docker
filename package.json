@@ -17,11 +17,11 @@
   },
   "dependencies": {
     "@hono/node-server": "^2.1.11",
-    "@logtape/logtape": "^2.1.1",
+    "@logtape/logtape": "^2.4.2",
     "@tensorflow/tfjs-node": "^4.22.0",
-    "hono": "^4.12.21",
-    "nsfwjs": "^4.3.0",
-    "sharp": "^0.34.5"
+    "hono": "^4.13.20",
+    "nsfwjs": "^4.4.0",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.8",
@@ -31,6 +31,6 @@
   "allowScripts": {
     "@tensorflow/tfjs-node@4.22.0": true,
     "core-js@3.29.1": true,
-    "sharp@0.34.5": true
+    "sharp@0.35.5": true
   }
 }
