@@ -1,27 +1,27 @@
-FROM denoland/deno:debian
+FROM node:26-bookworm-slim
 WORKDIR /usr/app
 
 RUN apt-get update && \
-    # Install required tools to build TensorFlow from source
-    # Nodejs is required to run postinstall scripts for TensorFlow
-    # NPM is required to rebuild TensorFlow as Deno doesn't have a rebuild command
-    apt-get install -y --no-install-recommends libjemalloc2 nodejs npm ca-certificates python3 make g++ && \
+    # jemalloc is required by sharp for "long-running, multi-threaded processes that involve lots of small memory allocations"
+    # https://sharp.pixelplumbing.com/install/#linux-memory-allocator
+    # libjemalloc2 (runtime) + python3/make/g++ (arm64 TensorFlow build)
+    apt-get install -y --no-install-recommends libjemalloc2 ca-certificates python3 make g++ && \
     # Locates the exact path of the installed libjemalloc.so.2 (which changes depending on the CPU architecture, x86_64 and arm64)
     # and creates a standardized symlink at /usr/lib/ so LD_PRELOAD can reliably find it
     ln -sf "$(dpkg -L libjemalloc2 | grep -m1 'libjemalloc\.so\.2$')" /usr/lib/libjemalloc.so.2 && \
     # Clean up apt caches to minimize image size
     rm -rf /var/lib/apt/lists/*
 
-# jemalloc is required by sharp for "long-running, multi-threaded processes that involve lots of small memory allocations"
-# https://sharp.pixelplumbing.com/install/#linux-memory-allocator
 ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
+ENV TF_CPP_MIN_LOG_LEVEL=1
 
-COPY deno.json deno.lock ./
+COPY package.json package-lock.json ./
 
-# Build TensorFlow from source as required for ARM
-# https://github.com/tensorflow/tfjs/issues/8603
-RUN deno ci && npm rebuild @tensorflow/tfjs-node --build-from-source
+# @tensorflow/tfjs-node ships an N-API binary for x64, but ARM builds it from
+# source (see https://github.com/tensorflow/tfjs/issues/8603)
+RUN npm ci && \
+    if [ "$(uname -m)" = "aarch64" ]; then npm rebuild @tensorflow/tfjs-node --build-from-source; fi
 
 COPY . .
 EXPOSE 3333
-CMD ["deno", "task", "start"]
+CMD ["node", "entry.ts"]

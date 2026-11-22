@@ -1,4 +1,5 @@
-import { Hono } from "@hono/hono";
+import { serve } from "@hono/node-server";
+import { Hono } from "hono";
 import { getPrediction, InvalidImageError } from "./get-prediction.ts";
 import { logger } from "./logger.ts";
 
@@ -12,7 +13,7 @@ app.post("/classify", async (c) => {
   }
   logger.debug("Classifying image ({size} bytes)", { size: buffer.byteLength });
   const start = performance.now();
-  let prediction;
+  let prediction: Awaited<ReturnType<typeof getPrediction>>;
   try {
     prediction = await getPrediction(buffer);
   } catch (error) {
@@ -25,11 +26,12 @@ app.post("/classify", async (c) => {
   return c.json({ prediction });
 });
 
-Deno.serve(
+serve(
   {
+    fetch: app.fetch,
     port: 3333,
   },
-  app.fetch,
+  (info) => {
+    logger.info("Server listening on port {port}", { port: info.port });
+  },
 );
-
-logger.info("Server starting on port 3333");

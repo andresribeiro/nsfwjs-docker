@@ -1,0 +1,36 @@
+{
+  "name": "nsfwjs-docker",
+  "version": "3.2.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=26"
+  },
+  "scripts": {
+    "start": "TF_CPP_MIN_LOG_LEVEL=1 node entry.ts",
+    "dev": "TF_CPP_MIN_LOG_LEVEL=1 node --watch entry.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "check": "biome check ."
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.11",
+    "@logtape/logtape": "^2.1.1",
+    "@tensorflow/tfjs-node": "^4.22.0",
+    "hono": "^4.12.21",
+    "nsfwjs": "^4.3.0",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.6.8",
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "@tensorflow/tfjs-node@4.22.0": true,
+    "core-js@3.29.1": true,
+    "sharp@0.34.5": true
+  }
+}

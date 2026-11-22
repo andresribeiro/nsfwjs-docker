@@ -131,13 +131,21 @@ docker run -p 3333:3333 nsfwjs
 
 ## Local development
 
-Requires [Deno](https://deno.com) and [NodeJS](https://nodejs.org).
+Requires [Node.js](https://nodejs.org) 26 or newer.
 
 ```shell
-deno install                                               # install dependencies
+npm install                                                # install dependencies
 npm rebuild @tensorflow/tfjs-node --build-from-source      # rebuild TensorFlow, required on arm64
-deno task dev                                              # watch mode (restarts on file changes)
-deno task start                                            # production mode
+npm run dev                                                # watch mode (restarts on file changes)
+npm run start                                              # production mode
+```
+
+Type checking and formatting:
+
+```shell
+npm run typecheck
+npm run check
+npm run format
 ```
 
 The server listens on port `3333`.
