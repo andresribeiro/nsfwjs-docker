@@ -71,6 +71,7 @@ const res = await fetch("http://localhost:3333/classify", {
   headers: { "Content-Type": "application/octet-stream" },
   body: imageBlobOrBuffer,
 });
+if (!res.ok) throw new Error(`classify failed: ${res.status}`);
 const { prediction } = await res.json();
 ```
 
@@ -85,6 +86,7 @@ with open("image.jpg", "rb") as f:
         data=f,
         headers={"Content-Type": "application/octet-stream"},
     )
+resp.raise_for_status()
 print(resp.json()["prediction"])
 # [{ className: "Neutral", probability: 0.637 }, ...]
 ```

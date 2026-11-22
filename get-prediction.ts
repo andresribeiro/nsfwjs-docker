@@ -10,7 +10,12 @@ logger.info("Loading NSFW model");
 const model = await nsfwjs.load("file://model/", { type: "graph" });
 logger.info("Model loaded");
 
-export class InvalidImageError extends Error {}
+export class InvalidImageError extends Error {
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, options);
+    this.name = "InvalidImageError";
+  }
+}
 
 export async function getPrediction(imageBuffer: ArrayBuffer) {
   // resolveWithObject is not needed — resize guarantees 224x224 output.
@@ -24,7 +29,7 @@ export async function getPrediction(imageBuffer: ArrayBuffer) {
       .toBuffer();
   } catch (error) {
     // sharp throws when it cannot decode the bytes: a bad request, not a server fault
-    throw new InvalidImageError((error as Error).message);
+    throw new InvalidImageError((error as Error).message, { cause: error });
   }
   const tfImage = tf.tensor3d(new Uint8Array(data), [224, 224, 3], "int32");
   try {
