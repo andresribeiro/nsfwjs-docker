@@ -55,6 +55,12 @@ Content-Type: application/json
 
 The probability of each category ranges from 0 (lowest) to 1 (highest).
 
+### Errors
+
+An empty body, or bytes that cannot be decoded as an image, return
+`400 Bad Request` with `{ "error": "invalid image" }`. Any other failure returns
+`500`.
+
 ## Examples
 
 ### Node.js / Browser
