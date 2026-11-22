@@ -12,7 +12,7 @@ High-performance, self-hosted NSFW detection API powered by
 - **Input:** JPEG, PNG, WebP, AVIF, TIFF, GIF (first frame), raw pixel data;
 - **Output:** 5-class classification — Neutral, Drawing, Sexy, Hentai, Porn;
 - **Multi-architecture:** Supports both `x64` and `arm64`.
-- **Lightweight:** Runs under 350 MB of RAM.
+- **Lightweight:** Runs under 200 MB of RAM.
 
 ## Table of Contents
 
@@ -54,6 +54,11 @@ Content-Type: application/json
 ```
 
 The probability of each category ranges from 0 (lowest) to 1 (highest).
+
+### Health check
+
+`GET /status` returns `200` with `{ "ok": true }` once the model is loaded and
+the server is accepting requests.
 
 ### Errors
 

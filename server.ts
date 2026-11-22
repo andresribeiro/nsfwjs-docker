@@ -5,6 +5,8 @@ import { logger } from "./logger.ts";
 
 const app = new Hono();
 
+app.get("/status", (c) => c.json({ ok: true }));
+
 app.post("/classify", async (c) => {
   const buffer = await c.req.arrayBuffer();
   if (buffer.byteLength === 0) {
